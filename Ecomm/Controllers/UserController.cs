@@ -10,28 +10,36 @@ namespace Ecomm.Controllers;
 [ApiController]
 public class UserController : Controller
 {
-    private readonly DatabaseConnection DbContext;
+    private readonly DatabaseConnection _DbContext;
 
     public UserController(DatabaseConnection db)
     {
-        DbContext = db;
+        _DbContext = db;
     }
     
     [HttpGet]
     public List<User> Index()
     {
-        return DbContext.Users.ToList();
+        return _DbContext.Users.ToList();
     }
     [HttpGet("{id}")]
-    public IActionResult GetUser(int id)
+    public IActionResult GetUser(Guid id)
     {
-        DbContext.Users.FirstOrDefault(u => u.id == id);
-        return Ok(DbContext.Users.Find(id));
+        var user = _DbContext.Users.FirstOrDefault(u => u.id == id);
+        return Ok(user);
     }
     [HttpGet("byName")]
     public IActionResult GetUserByName(String name)
     {
-        var user = DbContext.Users.FirstOrDefault(u => u.username == name);
+        var user = _DbContext.Users.FirstOrDefault(u => u.username == name);
+        return Ok(user);
+    }
+
+    [HttpPost]
+    public IActionResult Post([FromBody] User user)
+    {
+        _DbContext.Users.Add(user);
+        _DbContext.SaveChanges();
         return Ok(user);
     }
     

@@ -1,5 +1,7 @@
 using Ecomm.Data;
 using Ecomm.Models;
+using Ecomm.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,11 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-
+builder.Services.AddScoped<AdressService>();
+// builder.Services.Configure<ApiBehaviorOptions>(options =>
+// {
+//     options.SuppressModelStateInvalidFilter = false;
+// });
 builder.Services.AddDbContext<DatabaseConnection>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'MvcMovieContext' not found.")));
 
 var app = builder.Build();
+
 
 // using (var scope = app.Services.CreateScope())
 // {
@@ -29,9 +36,11 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
 
 app.Run();
 
