@@ -18,18 +18,18 @@ public class User
     public DateTime birthDate { get; set; }
 
     public string phoneNumber { get; set; }
-    
-    public bool isActive { get; set; }/*Mos harro qeta me bo  default 0 ok!*/
+
+    public bool isActive { get; set; } = false; /*Mos harro qeta me bo  default 0 ok!*/
 
     public Role role { get; set; } = Role.Customer;
-    
-    public DateTime createdAt { get; set; }
+
+    public DateTime createdAt { get; set; } = new DateTime();
 
     public DateTime? updatedAt { get; set; }
     
     public DateTime? deletedAt { get; set; }
     
-    public virtual ICollection<Address> Addresses { get; set; }
+    public virtual ICollection<Address> Addresses { get; set; } = new  List<Address>();
     
     
 }

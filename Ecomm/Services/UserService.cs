@@ -1,37 +1,25 @@
 using Ecomm.Data;
+using Ecomm.DTO;
+using Ecomm.Exceptions;
 using Ecomm.Models;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecomm.Services;
 
 public class UserService
 {
-    private readonly DatabaseConnection DbContext;
+    private readonly DatabaseConnection _dbContext;
 
     public UserService(DatabaseConnection db)
     {
-        DbContext = db;
+        _dbContext = db;
     }
-
-    public List<User> GetAllUsers()
+    public async  Task<ServiceResult<User>> SaveUser(SignUpDTO user)
     {
-        return DbContext.Users.ToList();
-    }
-
-    public User? GetUserById(int id)
-    {
-        return DbContext.Users.Find(id);
-    }
-
-    public User? GetUserByEmail(string email)
-    {
-        return DbContext.Users.Find(email);
-    }
-
-    public async  Task<User> SaveUser(User user)
-    {
-        var savedUser = await  DbContext.Users.AddAsync(user);
-        await DbContext.SaveChangesAsync();
-        return savedUser.Entity;
+        var savedUser = user.Adapt<User>();
+        await _dbContext.Users.AddAsync(savedUser);
+        await _dbContext.SaveChangesAsync();
+        return new ServiceResult<User>(){success = true, data = savedUser};
     }
 }

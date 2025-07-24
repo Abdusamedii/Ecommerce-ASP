@@ -12,6 +12,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<AdressService>();
+builder.Services.AddScoped<UserService>();
+
 // builder.Services.Configure<ApiBehaviorOptions>(options =>
 // {
 //     options.SuppressModelStateInvalidFilter = false;

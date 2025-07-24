@@ -1,5 +1,7 @@
 using Ecomm.Data;
+using Ecomm.DTO;
 using Ecomm.Models;
+using Ecomm.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,37 +12,24 @@ namespace Ecomm.Controllers;
 [ApiController]
 public class UserController : Controller
 {
-    private readonly DatabaseConnection _DbContext;
+    private readonly UserService _userService;
 
-    public UserController(DatabaseConnection db)
+    public UserController(UserService userService)
     {
-        _DbContext = db;
+        _userService = userService;
     }
     
     [HttpGet]
     public List<User> Index()
     {
-        return _DbContext.Users.ToList();
+        // return _DbContext.Users.ToList();
+        return new List<User>();
     }
-    [HttpGet("{id}")]
-    public IActionResult GetUser(Guid id)
-    {
-        var user = _DbContext.Users.FirstOrDefault(u => u.id == id);
-        return Ok(user);
-    }
-    [HttpGet("byName")]
-    public IActionResult GetUserByName(String name)
-    {
-        var user = _DbContext.Users.FirstOrDefault(u => u.username == name);
-        return Ok(user);
-    }
-
     [HttpPost]
-    public IActionResult Post([FromBody] User user)
+    public async  Task<IActionResult> Post([FromBody] SignUpDTO user)
     {
-        _DbContext.Users.Add(user);
-        _DbContext.SaveChanges();
-        return Ok(user);
+        var result = await _userService.SaveUser(user);
+        return Ok(result);
     }
     
 }

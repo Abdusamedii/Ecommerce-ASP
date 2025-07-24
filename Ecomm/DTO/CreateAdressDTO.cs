@@ -4,7 +4,7 @@ namespace Ecomm.DTO;
 
 public class CreateAdressDTO
 {
-    public Guid UserId { get; set; }
+    public Guid UserId { get; set; } /*Mos harro qeta ki me ba find By JWT remove later!!!*/
     [MinLength(4)]
     public string Title { get; set; }
     [MinLength(4)]
