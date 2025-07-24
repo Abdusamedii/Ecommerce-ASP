@@ -1,12 +1,8 @@
-using Ecomm.Data;
 using Ecomm.DTO;
-using Ecomm.Models;
 using Ecomm.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ecomm.Controllers;
-
 
 [Route("api/[controller]")]
 [ApiController]
@@ -18,20 +14,30 @@ public class UserController : Controller
     {
         _userService = userService;
     }
-    
+
     [HttpGet]
-    public List<User> Index()
+    public async Task<IActionResult> Index()
     {
-        // return _DbContext.Users.ToList();
-        return new List<User>();
+        var result = await _userService.findAll();
+        if (result.success) return Ok(result);
+        return BadRequest(result);
     }
+
+    [HttpGet("{username}")]
+    public async Task<IActionResult> Get(string username)
+    {
+        var result = await _userService.findUser(username);
+        if (result.success) return Ok(result);
+        return BadRequest(result);
+    }
+
     [HttpPost]
-    public async  Task<IActionResult> Post([FromBody] SignUpDTO user)
+    public async Task<IActionResult> Post([FromBody] SignUpDTO user)
     {
         var result = await _userService.SaveUser(user);
-        return Ok(result);
+        if (result.success) return Ok(result);
+        return BadRequest(result);
     }
-    
 }
 
 //findByName(String name);

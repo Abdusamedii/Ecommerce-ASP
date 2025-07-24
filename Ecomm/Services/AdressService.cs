@@ -18,7 +18,10 @@ public class AdressService
 
     public async Task<ServiceResult<Address>> CreateAdress(CreateAdressDTO adress)
     {
-       
+        if (adress is null)
+        {
+            return new ServiceResult<Address>(){success = false,errorMessage = "Adress is null"};
+        }       
         var user = await _dbContext.Users.AsNoTracking().AnyAsync(u => u.id == adress.UserId);
         if (!user)
         {

@@ -20,13 +20,13 @@ public class AdressController : Controller
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CreateAdressDTO adress)
     {
-        if (adress is null)
-        {
-            return BadRequest();
-        }
-
         var response = await  _adressService.CreateAdress(adress);
+        if (response.success)
+        {
         return Ok(response);
+                        
+        }
+        return BadRequest(response);
         /*Mos harro mavon me bo qe as UserID prej DTO mos me marr po prej JWT*/
 
     }
