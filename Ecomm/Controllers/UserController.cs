@@ -1,4 +1,3 @@
-using Ecomm.DTO;
 using Ecomm.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +15,7 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> GetAllUsers()
     {
         var result = await _userService.findAll();
         if (result.success) return Ok(result);
@@ -24,17 +23,9 @@ public class UserController : Controller
     }
 
     [HttpGet("{username}")]
-    public async Task<IActionResult> Get(string username)
+    public async Task<IActionResult> GetByUsername(string username)
     {
         var result = await _userService.findUser(username);
-        if (result.success) return Ok(result);
-        return BadRequest(result);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Post([FromBody] SignUpDTO user)
-    {
-        var result = await _userService.SaveUser(user);
         if (result.success) return Ok(result);
         return BadRequest(result);
     }
