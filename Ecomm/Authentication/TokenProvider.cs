@@ -21,6 +21,8 @@ public class TokenProvider(IConfiguration configuration)
             [
                 new Claim(JwtRegisteredClaimNames.Sub, user.id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.email),
+                new Claim(ClaimTypes.Role, user.role.ToString()),
+                new Claim("username", user.username),
                 new Claim("email_verified", user.isActive.ToString())
             ]),
             Expires = DateTime.UtcNow.AddMinutes(configuration.GetValue<int>("Jwt:ExpirationInMinutes")),
@@ -34,5 +36,18 @@ public class TokenProvider(IConfiguration configuration)
         var token = handler.CreateToken(tokenDescriptor);
 
         return token;
+    }
+
+    public string? GetUsernameByJwt(HttpContext context)
+    {
+        var identity = context.User.Identity as ClaimsIdentity;
+        if (identity != null)
+        {
+            var claims = identity.Claims;
+            var username = claims.FirstOrDefault(c => c.Type == "username")?.Value;
+            return username;
+        }
+
+        return null;
     }
 }

@@ -46,7 +46,6 @@ builder.Services.AddSwaggerGen(opt =>
     });
 });
 builder.Services.AddControllers();
-builder.Services.AddAuthorization();
 
 
 /*Services qe lidhen me Backend kta e kom bo qe me mundesu Versionimin ma te lehte*/
@@ -69,6 +68,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
+builder.Services.AddAuthentication();
 
 
 /*Qekjo pjes osht qe me pas te standartizum resposne qe bahet nese ne DTO eshte derguar gabim, kta e kom bo qe ne Frontend me u lehtu
