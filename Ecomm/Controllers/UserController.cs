@@ -48,6 +48,13 @@ public class UserController : Controller
         if (result.success) return Ok(result);
         return BadRequest(result);
     }
+
+    [HttpGet("testAlbiJava")]
+    [AllowAnonymous]
+    public IActionResult TestAlbiJava()
+    {
+        return Ok("testAlbiJava");
+    }
 }
 
 //findByName(String name);

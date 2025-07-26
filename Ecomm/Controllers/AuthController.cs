@@ -32,6 +32,7 @@ public class AuthController : Controller
     {
         var result = await _userService.SaveUser(user);
         if (result.success) return Ok(result);
+
         return BadRequest(result);
     }
 }

@@ -11,6 +11,9 @@ public class DatabaseConnection : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<Address> Addresses { get; set; }
+    public DbSet<Cart> Carts { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<SubCategory> SubCategories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,5 +25,13 @@ public class DatabaseConnection : DbContext
             .HasIndex(u => u.username)
             .IsUnique();
         modelBuilder.Entity<User>().HasIndex(u => u.email).IsUnique();
+        modelBuilder.Entity<Cart>()
+            .HasOne(c => c.User)
+            .WithOne(u => u.Cart)
+            .HasForeignKey<Cart>(c => c.UserId);
+        modelBuilder.Entity<SubCategory>()
+            .HasOne(s => s.Category)
+            .WithMany(c => c.SubCategories)
+            .HasForeignKey(s => s.ParentId);
     }
 }

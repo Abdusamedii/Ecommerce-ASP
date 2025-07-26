@@ -53,6 +53,8 @@ builder.Services.AddScoped<AdressService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<TokenProvider>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<CategoryService>();
 
 /*JWT AUTHENTICATION*/
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -101,6 +103,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers().RequireAuthorization();
-
 
 app.Run();
