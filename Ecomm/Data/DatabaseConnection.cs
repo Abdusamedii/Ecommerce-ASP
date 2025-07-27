@@ -14,6 +14,10 @@ public class DatabaseConnection : DbContext
     public DbSet<Cart> Carts { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<SubCategory> SubCategories { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<ProductSubCategory> ProductSubCategories { get; set; }
+
+    public DbSet<ProductImage> ProductImages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -33,5 +37,22 @@ public class DatabaseConnection : DbContext
             .HasOne(s => s.Category)
             .WithMany(c => c.SubCategories)
             .HasForeignKey(s => s.ParentId);
+        modelBuilder.Entity<ProductSubCategory>().HasKey(pc => new { pc.ProductId, pc.SubCategoryId });
+        modelBuilder.Entity<ProductSubCategory>()
+            .HasOne(s => s.SubCategory)
+            .WithMany(c => c.ProductCategories)
+            .HasForeignKey(s => s.SubCategoryId);
+        modelBuilder.Entity<ProductSubCategory>()
+            .HasOne(s => s.Product)
+            .WithMany(c => c.ProductCategories)
+            .HasForeignKey(s => s.ProductId);
+        modelBuilder.Entity<Product>()
+            .HasMany(p => p.ProductImages)
+            .WithOne(p => p.Product)
+            .HasForeignKey(p => p.ProductId);
+        modelBuilder.Entity<ProductImage>()
+            .HasOne(p => p.Product)
+            .WithMany(p => p.ProductImages)
+            .HasForeignKey(p => p.ProductId);
     }
 }

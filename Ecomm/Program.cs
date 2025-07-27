@@ -55,6 +55,7 @@ builder.Services.AddScoped<TokenProvider>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<ProductService>();
 
 /*JWT AUTHENTICATION*/
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

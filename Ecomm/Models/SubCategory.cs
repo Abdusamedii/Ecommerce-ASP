@@ -11,4 +11,5 @@ public class SubCategory
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     [JsonIgnore] public virtual Category Category { get; set; }
+    public virtual ICollection<ProductSubCategory> ProductCategories { get; set; } = new List<ProductSubCategory>();
 }
