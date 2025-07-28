@@ -17,6 +17,9 @@ public class DatabaseConnection : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductSubCategory> ProductSubCategories { get; set; }
 
+    // public DbSet<ProductSKU> ProductSKUs { get; set; }
+
+    public DbSet<CartItem> CartItems { get; set; }
     public DbSet<ProductImage> ProductImages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,5 +57,19 @@ public class DatabaseConnection : DbContext
             .HasOne(p => p.Product)
             .WithMany(p => p.ProductImages)
             .HasForeignKey(p => p.ProductId);
+        modelBuilder.Entity<CartItem>()
+            .HasOne(c => c.Product)
+            .WithMany(p => p.cartItems)
+            .HasForeignKey(c => c.ProductId);
+        modelBuilder.Entity<CartItem>()
+            .HasOne(c => c.Cart)
+            .WithMany(c => c.CartItems)
+            .HasForeignKey(c => c.CartId);
+        modelBuilder.Entity<CartItem>()
+            .HasIndex(ci => new { ci.CartId, ci.ProductId })
+            .IsUnique();
+        // modelBuilder.Entity<ProductSKU>()
+        //     .HasMany(s => s.Product)
+        //     .WithOne(p => p.)
     }
 }

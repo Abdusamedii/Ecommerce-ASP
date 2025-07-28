@@ -6,6 +6,9 @@ public class CreateProductDTO
     public List<string> ImagePath { get; set; }
     public string name { get; set; }
 
+    public float price { get; set; }
+    public int quantity { get; set; }
+
     public List<int> subCategoryId { get; set; }
     public string summary { get; set; }
 }

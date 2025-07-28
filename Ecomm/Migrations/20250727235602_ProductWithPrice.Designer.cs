@@ -4,6 +4,7 @@ using Ecomm.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecomm.Migrations
 {
     [DbContext(typeof(DatabaseConnection))]
-    partial class DatabaseConnectionModelSnapshot : ModelSnapshot
+    [Migration("20250727235602_ProductWithPrice")]
+    partial class ProductWithPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,39 +93,6 @@ namespace Ecomm.Migrations
                         .IsUnique();
 
                     b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("Ecomm.Models.CartItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("CartId", "ProductId")
-                        .IsUnique();
-
-                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("Ecomm.Models.Category", b =>
@@ -342,25 +312,6 @@ namespace Ecomm.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Ecomm.Models.CartItem", b =>
-                {
-                    b.HasOne("Ecomm.Models.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ecomm.Models.Product", "Product")
-                        .WithMany("cartItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Ecomm.Models.ProductImage", b =>
                 {
                     b.HasOne("Ecomm.Models.Product", "Product")
@@ -402,11 +353,6 @@ namespace Ecomm.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Ecomm.Models.Cart", b =>
-                {
-                    b.Navigation("CartItems");
-                });
-
             modelBuilder.Entity("Ecomm.Models.Category", b =>
                 {
                     b.Navigation("SubCategories");
@@ -417,8 +363,6 @@ namespace Ecomm.Migrations
                     b.Navigation("ProductCategories");
 
                     b.Navigation("ProductImages");
-
-                    b.Navigation("cartItems");
                 });
 
             modelBuilder.Entity("Ecomm.Models.SubCategory", b =>

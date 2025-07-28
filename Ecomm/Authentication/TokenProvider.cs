@@ -50,4 +50,18 @@ public class TokenProvider(IConfiguration configuration)
 
         return null;
     }
+
+    public Guid? GetIdByJwt(HttpContext context)
+    {
+        var identity = context.User.Identity as ClaimsIdentity;
+        if (identity != null)
+        {
+            var claims = identity.Claims;
+            var id = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var identification = new Guid(id);
+            return identification;
+        }
+
+        return null;
+    }
 }

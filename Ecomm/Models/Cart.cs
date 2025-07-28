@@ -8,4 +8,5 @@ public class Cart
     public Guid UserId { get; set; }
 
     [JsonIgnore] public virtual User User { get; set; }
+    public virtual ICollection<CartItem> CartItems { get; set; }
 }

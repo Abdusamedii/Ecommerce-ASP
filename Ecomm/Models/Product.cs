@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Ecomm.Models;
 
 public class Product
@@ -9,6 +11,10 @@ public class Product
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
+    public float price { get; set; }
+    public int quantity { get; set; }
+
+    [JsonIgnore] public virtual ICollection<CartItem> cartItems { get; set; } = new List<CartItem>();
     public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
     public virtual ICollection<ProductSubCategory> ProductCategories { get; set; } = new List<ProductSubCategory>();
 }

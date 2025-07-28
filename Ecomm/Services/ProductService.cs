@@ -24,7 +24,9 @@ public class ProductService
             {
                 name = productDto.name,
                 description = productDto.description,
-                summary = productDto.summary
+                summary = productDto.summary,
+                price = productDto.price,
+                quantity = productDto.quantity
             };
             await _dbContext.Products.AddAsync(product);
             await _dbContext.SaveChangesAsync();
