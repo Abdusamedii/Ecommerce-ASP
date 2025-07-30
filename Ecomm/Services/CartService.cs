@@ -46,7 +46,7 @@ public class CartService
             if (DoesCartItemExist.DeletedAt.HasValue)
             {
                 DoesCartItemExist.DeletedAt = null;
-                DoesCartItemExist.Quantity = 1;
+                DoesCartItemExist.Quantity = cartItemDTO.Quantity;
                 await _dbContext.SaveChangesAsync();
                 return new ServiceResult<CartItem> { success = true, data = DoesCartItemExist };
             }
@@ -83,9 +83,11 @@ public class CartService
         if (userId == null)
             return new ServiceResult<ICollection<CartItem>>
                 { success = false, errorMessage = "User Id Is null check JWT" };
+        /*Qekjo LINQ qka bon osht qe e merr cart te Userit edhe i bon include krejt CartItems qe i ka tani i ban include edhe Product data qe osht brenda CartItem
+         Pasi qe kur si user e klikon Cart Button met dal produktet si list me foto etc...*/
         var cart = await _dbContext.Carts
             .AsNoTracking()
-            .Include(c => c.CartItems)
+            .Include(c => c.CartItems.Where(ci => ci.DeletedAt == null)).ThenInclude(ci => ci.Product)
             .FirstOrDefaultAsync(c => c.UserId == userId);
         if (cart == null)
             return new ServiceResult<ICollection<CartItem>>
@@ -105,7 +107,8 @@ public class CartService
             await _dbContext.CartItems.FirstOrDefaultAsync(c => c.CartId == cart.Id && c.Id == cartItemDTO.itemId);
         if (cartItem == null)
             return new ServiceResult<CartItem> { success = false, errorMessage = "This Item is not on the Cart" };
-
+        if (cartItem.DeletedAt.HasValue)
+            return new ServiceResult<CartItem> { success = false, errorMessage = "This item is arleady deleted" };
         cartItem.UpdatedAt = DateTime.UtcNow;
         var changedQuantity = cartItem.Quantity - 1;
         if (changedQuantity <= 0)
@@ -133,6 +136,8 @@ public class CartService
             await _dbContext.CartItems.FirstOrDefaultAsync(c => c.CartId == cart.Id && c.Id == cartItemDTO.itemId);
         if (cartItem == null)
             return new ServiceResult<CartItem> { success = false, errorMessage = "This Item is not on the Cart" };
+        if (cartItem.DeletedAt.HasValue)
+            return new ServiceResult<CartItem> { success = false, errorMessage = "This item is arleady deleted" };
         cartItem.Quantity = 0;
         cartItem.UpdatedAt = DateTime.UtcNow;
         cartItem.DeletedAt = DateTime.UtcNow;

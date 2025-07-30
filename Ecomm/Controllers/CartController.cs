@@ -47,4 +47,14 @@ public class CartController : Controller
         if (result.success) return Ok(result);
         return BadRequest(result);
     }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteCartItem([FromBody] UpdateDeleteCartItemDTO cartItemDto)
+    {
+        var userId = _TokenProvider.GetIdByJwt(HttpContext);
+        if (userId == null) return Unauthorized();
+        var result = await _CartService.DeleteCartById(cartItemDto, userId);
+        if (result.success) return Ok(result);
+        return BadRequest(result);
+    }
 }

@@ -3,6 +3,7 @@ using CalConnect.Api.Users.Infrastructure;
 using dotenv.net;
 using Ecomm.Data;
 using Ecomm.Exceptions;
+using Ecomm.Models.SwaggerSchemaFilters;
 using Ecomm.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +45,7 @@ builder.Services.AddSwaggerGen(opt =>
             new string[] { }
         }
     });
+    opt.SchemaFilter<SchemaFilter>();
 });
 builder.Services.AddControllers();
 
