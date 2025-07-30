@@ -29,4 +29,14 @@ public class AdressController : Controller
         return BadRequest(response);
         /*Mos harro mavon me bo qe as UserID prej DTO mos me marr po prej JWT*/
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAdress()
+    {
+        var userId = _tokenProvider.GetIdByJwt(HttpContext);
+        if (userId == null) return Unauthorized();
+        var result = await _adressService.GetAllAdresses(userId.Value);
+        if (result.success) return Ok(result);
+        return BadRequest(result);
+    }
 }

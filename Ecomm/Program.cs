@@ -5,6 +5,7 @@ using Ecomm.Data;
 using Ecomm.Exceptions;
 using Ecomm.Models.SwaggerSchemaFilters;
 using Ecomm.Services;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -92,7 +93,15 @@ builder.Services.Configure<ApiBehaviorOptions>(options
 
 builder.Services.AddDbContext<DatabaseConnection>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??
-                     throw new InvalidOperationException("Connection string 'MvcMovieContext' not found.")));
+                     throw new InvalidOperationException("Connection string 'DefaultConnection' not found.")));
+
+/*Jom tu e shtu HangFire se e kam plan me ba ni schedule operation ,
+ kur e bon ni order me u bo si ni far forme rezervim i quantity te qatij Produkti qe qaj produkt me u dekrementu
+ nese order nuk perfundohet at her produktit iu rikthehet quantiteti nese jo met qashtu permanent GG
+ */
+builder.Services.AddHangfire(x =>
+    x.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
@@ -102,6 +111,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapOpenApi();
 }
+
+app.UseHangfireDashboard();
 
 
 app.UseHttpsRedirection();
