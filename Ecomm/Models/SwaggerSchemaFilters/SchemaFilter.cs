@@ -15,5 +15,10 @@ public class SchemaFilter : ISchemaFilter
                 ["email"] = new OpenApiString("medi@medi.com"),
                 ["password"] = new OpenApiString("medimedi")
             };
+        if (context.Type == typeof(CreateAdressDTO))
+            schema.Example = new OpenApiObject
+            {
+                ["UserId"] = new OpenApiString("User Id will be set by the JWT authentication")
+            };
     }
 }
