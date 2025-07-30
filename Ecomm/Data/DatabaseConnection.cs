@@ -22,6 +22,12 @@ public class DatabaseConnection : DbContext
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<ProductImage> ProductImages { get; set; }
 
+    public DbSet<Order> Orders { get; set; }
+
+    public DbSet<OrderItem> OrderItems { get; set; }
+
+    public DbSet<Payment> Payments { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>()
@@ -68,6 +74,22 @@ public class DatabaseConnection : DbContext
         modelBuilder.Entity<CartItem>()
             .HasIndex(ci => new { ci.CartId, ci.ProductId })
             .IsUnique();
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(oi => oi.Order)
+            .WithMany(o => o.OrderItems)
+            .HasForeignKey(oi => oi.OrderId);
+        modelBuilder.Entity<OrderItem>()
+            .HasOne(oi => oi.Product)
+            .WithMany(p => p.OrderItems)
+            .HasForeignKey(oi => oi.ProductId);
+        modelBuilder.Entity<Payment>()
+            .HasOne(p => p.Order)
+            .WithOne(o => o.Payment)
+            .HasForeignKey<Payment>(p => p.OrderId);
+        modelBuilder.Entity<Order>()
+            .HasOne(o => o.Address)
+            .WithMany(a => a.Orders)
+            .HasForeignKey(o => o.AdressId);
         // modelBuilder.Entity<ProductSKU>()
         //     .HasMany(s => s.Product)
         //     .WithOne(p => p.)

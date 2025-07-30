@@ -11,4 +11,5 @@ public class Payment
     public Providers Provider { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    public virtual Order Order { get; set; }
 }

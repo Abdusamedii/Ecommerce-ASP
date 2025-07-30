@@ -21,4 +21,6 @@ public class Address
     public DateTime? DeletedAt { get; set; }
 
     public virtual User User { get; set; } = null!;
+
+    public virtual ICollection<Order> Orders { get; set; }
 }

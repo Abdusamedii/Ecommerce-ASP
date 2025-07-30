@@ -17,4 +17,6 @@ public class Product
     [JsonIgnore] public virtual ICollection<CartItem> cartItems { get; set; } = new List<CartItem>();
     public virtual ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
     public virtual ICollection<ProductSubCategory> ProductCategories { get; set; } = new List<ProductSubCategory>();
+
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }
