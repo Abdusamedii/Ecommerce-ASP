@@ -27,4 +27,24 @@ public class CartController : Controller
         if (result.success) return Ok(result);
         return BadRequest(result);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetCartItems()
+    {
+        var userId = _TokenProvider.GetIdByJwt(HttpContext);
+        if (userId == null) return Unauthorized();
+        var result = await _CartService.GetCartItems(userId);
+        if (result.success) return Ok(result);
+        return BadRequest(result);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> DecrementCartItem([FromBody] UpdateDeleteCartItemDTO cartItemDto)
+    {
+        var userId = _TokenProvider.GetIdByJwt(HttpContext);
+        if (userId == null) return Unauthorized();
+        var result = await _CartService.DecrementCartById(cartItemDto, userId);
+        if (result.success) return Ok(result);
+        return BadRequest(result);
+    }
 }

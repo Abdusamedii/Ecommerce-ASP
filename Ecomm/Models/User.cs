@@ -23,7 +23,7 @@ public class User
 
     public Role role { get; set; } = Role.Customer;
 
-    public DateTime createdAt { get; set; } = new();
+    public DateTime createdAt { get; set; } = DateTime.Now;
 
     public DateTime? updatedAt { get; set; }
 

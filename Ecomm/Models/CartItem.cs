@@ -12,6 +12,8 @@ public class CartItem
     [JsonIgnore] public virtual Cart Cart { get; set; }
 
     public virtual Product Product { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; } = DateTime.Now;
+
+    public DateTime? DeletedAt { get; set; } = null;
 }
