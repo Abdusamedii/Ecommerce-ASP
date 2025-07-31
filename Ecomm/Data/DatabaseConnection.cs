@@ -90,8 +90,7 @@ public class DatabaseConnection : DbContext
             .HasOne(o => o.Address)
             .WithMany(a => a.Orders)
             .HasForeignKey(o => o.AdressId);
-        // modelBuilder.Entity<ProductSKU>()
-        //     .HasMany(s => s.Product)
-        //     .WithOne(p => p.)
+        modelBuilder.Entity<Payment>()
+            .HasIndex(p => p.OrderId).IsUnique();
     }
 }

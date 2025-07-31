@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Ecomm.Models;
 
 public class OrderItem
@@ -8,6 +10,6 @@ public class OrderItem
     public int Quantity { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
-    public virtual Order Order { get; set; }
+    [JsonIgnore] public virtual Order Order { get; set; }
     public virtual Product Product { get; set; }
 }
