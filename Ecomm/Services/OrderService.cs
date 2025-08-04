@@ -86,8 +86,10 @@ public class OrderService
                 Status = PaymentStatus.InProgress
             };
             _dbContext.Payments.Add(payment);
-            BackgroundJob.Schedule(() => CancelOrderByHangfire(payment.Id), TimeSpan.FromMinutes(1));
+
             await _dbContext.SaveChangesAsync();
+            if (orderDtoDto.Provider == Providers.Card)
+                BackgroundJob.Schedule(() => CancelOrderByHangfire(payment.Id), TimeSpan.FromMinutes(1));
             await transaction.CommitAsync();
         }
         catch (Exception e)
@@ -128,23 +130,21 @@ public class OrderService
         };
     }
 
-    private async Task CancelOrderByHangfire(int paymentId)
+    public async Task CancelOrderByHangfire(int paymentId)
     {
         var payment = await _dbContext.Payments
             .Include(p => p.Order)
             .ThenInclude(o => o.OrderItems)
             .FirstOrDefaultAsync(p => p.Id == paymentId);
-        if (payment.Status != PaymentStatus.InProgress)
-        {
-            return;
-        }
+        if (payment.Status != PaymentStatus.InProgress) return;
         payment.Status = PaymentStatus.Cancelled;
-        
+
         foreach (var item in payment.Order.OrderItems)
         {
             var product = await _dbContext.Products.FindAsync(item.ProductId);
             product.quantity += item.Quantity;
         }
-        
+
+        await _dbContext.SaveChangesAsync();
     }
 }
