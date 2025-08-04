@@ -62,7 +62,7 @@ A full-featured e-commerce REST API built with .NET 9.0 and Entity Framework Cor
 
 1. **Clone the repository**
 ```bash
-git clone <repository-url>
+git clone https://github.com/Abdusamedii/Ecommerce-ASP.git
 cd Ecomm
 ```
 
@@ -219,9 +219,9 @@ This project is licensed under the MIT License.
 ### Business Features
 - **Reporting/Analytics**: Business intelligence, data analytics
 - **Search & Filtering**: Advanced product search capabilities
-- **Pagination**: Handle large datasets efficiently
-- **File Upload**: Product image management
-- **Email Notifications**: Order confirmations and status updates
+- **Pagination**: Handle large datasets efficiently 
+- **File Upload**: Product image management locally or any Service providers
+- **Email Notifications**: Order confirmations and status updates via SMTP
 - **Real-time Updates**: WebSocket integration with SignalR
 
 ### Production Readiness
