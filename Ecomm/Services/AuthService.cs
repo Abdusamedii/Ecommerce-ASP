@@ -23,7 +23,8 @@ public class AuthService
         if (user == null)
             return new ServiceResult<string>
                 { success = false, errorMessage = "User not found with this email Adress" };
-        if (login.Password == user.password)
+        var isPasswordVerified = BCrypt.Net.BCrypt.Verify(login.Password, user.password);
+        if (isPasswordVerified)
         {
             var token = _tokenProvider.Create(user);
             Console.WriteLine(token);

@@ -29,6 +29,7 @@ public class UserService
         if (user.password != user.confirmPassword)
             return new ServiceResult<User> { success = false, errorMessage = "Passwords do not match" };
         var savedUser = user.Adapt<User>();
+        savedUser.password = BCrypt.Net.BCrypt.HashPassword(user.password);
         try
         {
             await _dbContext.Users.AddAsync(savedUser);
