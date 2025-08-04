@@ -1,7 +1,7 @@
 
 # E-commerce REST API
 
-A full-featured e-commerce REST API built with .NET 9.0 and Entity Framework Core. This project showcases modern backend development practices with a complete e-commerce solution including user management, product catalog, shopping cart, order processing, and payment handling.
+A e-commerce REST API built with .NET 9.0 and Entity Framework Core. This project showcases modern backend development practices with a complete e-commerce solution including user management, product catalog, shopping cart, order processing, and payment handling.
 
 ## What's Included
 
@@ -55,7 +55,7 @@ A full-featured e-commerce REST API built with .NET 9.0 and Entity Framework Cor
 
 ### Prerequisites
 - .NET 9.0 SDK
-- SQL Server (Local or Azure)
+- SQL Server (Local or Azure or via Docker-Compose)
 - Docker (optional)
 
 ### Setup
