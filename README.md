@@ -181,15 +181,56 @@ This project is licensed under the MIT License.
 
 
 
-Future additions:
- Comprehensive unit testing with xUnit
- API rate limiting for security
- Structured logging with Serilog
- Redis caching for performance
- File upload for product images
- Email notifications for orders
- Search & filtering capabilities
- Health checks for monitoring
+## Upcoming Features
+
+### Architecture
+- **Observability & Monitoring**: Application metrics, performance monitoring, health checks
+- **Configuration Management**: Environment-specific configs, feature flags, secrets management
+- **API Versioning Strategy**: Backward compatibility and API lifecycle management
+- **Caching Strategy**: Redis, in-memory caching, cache invalidation
+- **Rate Limiting/Throttling**: API abuse prevention, DDoS protection
+- **Multi-tenancy Support**: SaaS capabilities for multiple customers/organizations
+- **Data Encryption**: Encryption at rest, sensitive data protection
+- **Backup/Recovery Strategy**: Data backup, disaster recovery
+- **Performance Optimization**: Database indexing strategy, query optimization
+
+### Security Enhancements
+- **Input Sanitization**: SQL injection protection, XSS prevention
+- **CORS Configuration**: Cross-origin request handling
+- **Audit Logging**: Track who did what when for compliance
+- **Secure Headers**: HSTS, CSP, X-Frame-Options
+- **Business Rules Engine**: Configurable business rules
+- **Workflow Management**: Order status workflows, approval processes
+
+### Advanced Design Patterns
+- **Repository Pattern**: Abstraction layer between data access and business logic
+- **CQRS Pattern**: Separate read/write models for performance optimization
+- **Event-Driven Architecture**: Domain events, event sourcing for loose coupling
+- **Circuit Breaker Pattern**: Resilience against external service failures
+- **Dependency Injection Best Practices**: Interface-based DI, lifetime management
+
+### Development & DevOps
+- **CI/CD Pipeline**: Automated testing, deployment automation
+- **Code Quality Tools**: Static analysis, code coverage, linting
+- **Unit Testing**: Comprehensive test coverage with xUnit
+- **Integration Testing**: End-to-end testing scenarios
+- **Logging & Monitoring**: Structured logging with Serilog
+
+### Business Features
+- **Reporting/Analytics**: Business intelligence, data analytics
+- **Search & Filtering**: Advanced product search capabilities
+- **Pagination**: Handle large datasets efficiently
+- **File Upload**: Product image management
+- **Email Notifications**: Order confirmations and status updates
+- **Real-time Updates**: WebSocket integration with SignalR
+
+### Production Readiness
+- **Health Checks**: Application health monitoring
+- **Database Seeding**: Development environment setup
+- **Error Handling**: Comprehensive error management
+- **Data Validation**: Advanced input validation 
+- **API Documentation**: Enhanced documentation beyond Swagger
+
 
 Tech stack: .NET 9.0, EF Core, JWT, Hangfire, Docker, Redis, xUnit
 
