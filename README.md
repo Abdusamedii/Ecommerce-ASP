@@ -70,8 +70,6 @@ cd Ecomm
 Create a `.env` file in the root directory:
 ```env
 JWT_SECRET_KEY=your-super-secret-jwt-key-here
-JWT_ISSUER=your-issuer
-JWT_AUDIENCE=your-audience
 ```
 
 3. **Database setup**
@@ -95,36 +93,8 @@ dotnet run
 ```
 
 The API will be available at:
-- API: https://localhost:7001
-- Swagger UI: https://localhost:7001/swagger
-
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration
-
-### Products
-- `GET /api/product` - Get all products
-- `POST /api/product` - Create new product (Admin only)
-
-### Cart
-- `GET /api/cart` - Get user cart
-- `POST /api/cart` - Add item to cart
-- `PUT /api/cart` - Update cart item
-- `DELETE /api/cart` - Remove cart item
-
-### Orders
-- `POST /api/order` - Create new order
-- `GET /api/order` - Get user orders
-
-### Categories
-- `GET /api/category` - Get all categories
-- `POST /api/category` - Create category (Admin only)
-
-### Address
-- `GET /api/address` - Get user addresses
-- `POST /api/address` - Add new address
+- API: https://localhost:5263
+- Swagger UI: https://localhost:5263/swagger
 
 ## Project Structure
 
@@ -179,18 +149,6 @@ Ecomm/
 - Database Indexing for better performance
 - Async/Await patterns throughout
 - Connection Pooling for database efficiency
-
-## Docker Deployment
-
-Build the Docker image:
-```bash
-docker build -t ecomm-api .
-```
-
-Run the container:
-```bash
-docker run -p 8080:8080 ecomm-api
-```
 
 ## Database Schema
 
