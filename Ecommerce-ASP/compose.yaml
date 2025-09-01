@@ -1,0 +1,20 @@
+﻿services:
+  ecomm:
+    image: ecomm
+    build:
+      context: .
+      dockerfile: Ecomm/Dockerfile
+  mssql:
+    container_name: sql-server
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Muunjal2"
+    ports:
+      - 1433:1433
+    volumes:
+      - ecommerce:/var/opt/mssql
+
+volumes:
+  ecommerce:
